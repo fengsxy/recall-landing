@@ -91,9 +91,9 @@ npm run dev
 - 语义化 HTML
 
 ✅ **性能优化**
-- 静态导出
+- Next.js 14 App Router
 - Tailwind CSS
-- 零服务端依赖
+- 自动静态优化
 
 ✅ **专业品牌**
 - 克制、不浮夸
@@ -122,6 +122,9 @@ npm run dev
 - 推送到 `main` → 自动部署到生产环境
 - 推送到其他分支 → 创建预览部署
 - Pull Request → 独立预览链接
+
+> ⚠️ **Routes Manifest Could Not Be Found？**  
+保持 Vercel 的默认 Build 命令（`npm run build`）和 Output Directory（留空，Vercel 会自动使用 `.next/`）。如果你改成了 `out` 或者跳过了 `next build`，Vercel 会找不到 `.next/routes-manifest.json` 从而部署失败。先在本地运行 `npm run build` 确认能成功再推到远端。
 
 ## 📱 分享链接
 

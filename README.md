@@ -78,9 +78,23 @@ vercel
 5. Vercel will automatically detect Next.js and configure build settings
 6. Click "Deploy"
 
+### Troubleshooting
+
+If a deployment fails with `Routes Manifest Could Not Be Found`, it means Vercel could not find `.next/routes-manifest.json`. The usual causes are:
+- The build command did not run `next build`
+- The output directory was overridden to something other than `.next`
+- The build failed earlier and `.next/` was never generated
+
+Fix it by keeping the default build/output settings (see above) and ensuring `npm run build` completes locally. After a successful build, `.next/routes-manifest.json` will exist automatically.
+
 ### Environment Configuration
 
-This project uses static export (`output: 'export'` in `next.config.js`), which means it can be deployed to any static hosting service without any backend requirements.
+This project uses the default Next.js server runtime (no custom `distDir` or static export). Keep the default Vercel settings:
+- **Build Command:** `npm run build`
+- **Output Directory:** leave empty so Next.js can emit `.next`
+- **Install Command:** `npm install`
+
+Vercel will pick these defaults automatically, so you usually do not need a `vercel.json`. Only add one if you have advanced requirements.
 
 ## Project Structure
 

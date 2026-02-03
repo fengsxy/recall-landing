@@ -92,8 +92,8 @@ vercel --prod
 # 构建生产版本
 npm run build
 
-# 启动本地服务器预览
-npx serve out
+# 启动 Next.js 生产服务器
+npm run start
 ```
 
 ## 故障排除
@@ -108,8 +108,24 @@ npx serve out
 
 ### 页面无法访问
 
-- 确保 `next.config.js` 中的 `output: 'export'` 配置正确
-- 确保没有使用 Next.js 的服务端 API routes
+- 确保没有修改 Next.js 的 `distDir` 或 Vercel Output Directory，保持 `.next/`
+- 确保 `npm run build` 成功完成（本地可先跑一遍确认）
+
+### Routes Manifest Could Not Be Found
+
+Vercel 会在 `.next/routes-manifest.json` 中读取路由信息。出现该错误通常是：
+
+1. Build 命令不是 `next build`（比如误用了 `next export` 或自定义脚本）
+2. 在 Vercel 中把 Output Directory 改成了 `out/` 或其他路径
+3. `next build` 实际上失败了
+
+解决方案：
+- 在本地运行 `npm run build` 确认 `.next/routes-manifest.json` 存在
+- 在 Vercel 的 **Project Settings → Build & Development Settings** 中确保：
+  - Build Command = `npm run build`
+  - Output Directory 留空（Vercel 会自动使用 `.next`）
+  - Install Command = `npm install`
+- 不要把 `.next/` 或 `routes-manifest.json` 加入仓库，Vercel 会在部署时自动生成
 
 ## 性能优化建议
 
